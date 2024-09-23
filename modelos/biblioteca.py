@@ -1,5 +1,7 @@
 from modelos.avaliacoes import Avaliacao
+from modelos.comentarios import Comentarios
 lista_de_livros = list()
+lista_de_comentarios = list()
 class Biblioteca :
     def __init__(self,nome,categoria,ano): #Bloco construtor, define os parametros de todos os livros
         self._nome = nome.capitalize()
@@ -8,6 +10,7 @@ class Biblioteca :
         self._avaliacao = []
         self._disponivel = False
         lista_de_livros.append(self)
+        
 
     @property #Transforma o metodo em um atribudo da classe, facilitando sua manipulação
     def __str__(self):#Lê os atributos com string
@@ -18,6 +21,8 @@ class Biblioteca :
         print(f'{"NOME".ljust(25)}||{"CATEGORIA".ljust(25)}||{'ANO'.ljust(25)}||{'AVALIAÇÕES'.ljust(25)}||{'DISPONIBILIDADE'}')
         for livro in lista_de_livros:
             print(f'{livro._nome.ljust(25)}||{livro._categoria.ljust(25)}||{livro._ano.ljust(25)}||{str(livro.calculo_de_media).ljust(25)}||{'DISPONIVEL'if livro._disponivel else 'INDISPONIVEL'}')
+
+        
     
     @classmethod
     def buscar_livro_por_nome(cls, nome): #metodo para encontrar um livro pelo o nome
@@ -26,6 +31,8 @@ class Biblioteca :
             if livro._nome == nome: # Se o livro da lista for igual ao nome da busca, retornar livro
                 return livro
         return None
+    
+    
           
     def alternar_estado(self):
         self._disponivel = not self._disponivel #inverte o estado booleano para false ou True
@@ -34,6 +41,17 @@ class Biblioteca :
         if 0 <= nota <= 5 : # se 0 for menor ou igual a nota ou 5 for menor ou igual a zero executar:
             avaliacao = Avaliacao(cliente,nota) #A variavel avalicão recebe os atributos da classe Avaliação
             self._avaliacao.append(avaliacao)
+    
+    def adicionar_comentario(self,nome_cliente,comentario):
+        comentari0 = Comentarios(nome_cliente,comentario)
+        lista_de_comentarios.append(comentari0)
+        
+    @classmethod
+    def exibir_comentario(cls):
+        for c in lista_de_comentarios:
+            print('-='*30)
+            print(f'[CLIENTE]:{c._nome_cliente}\n[COMENTARIO]:{c._comentario}')
+            print('-='*30)
             
     @property 
     def calculo_de_media(self):#metodo para calcular a media das avaliações

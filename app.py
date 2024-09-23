@@ -3,7 +3,9 @@ import os
 from time import sleep
 from modelos.biblioteca import Biblioteca
 from modelos.avaliacoes import Avaliacao
+from modelos.comentarios import Comentarios
 
+lista_de_comentarios=list()
 #Exibi o titulo (Biblioteca)
 def titulo():
     os.system('cls')
@@ -15,6 +17,7 @@ def titulo():
 def finalizar_app():
     os.system('cls')
     print('Finalizar app...')
+    exit()
     sleep(0.5)
 
 #Função para exibir as opções
@@ -23,8 +26,9 @@ def exibir_opcoes():
     print('''
           1.ADICIONAR NOVO LIVRO
           2.LISTAR LIVROS DA BIBLIOTECA
-          3.FINALIZAR APP.
-          4.LOCAR LIVRO''')
+          3.LOCAR LIVRO
+          4.EXIBIR COMENTARIOS
+          5.Fechar app''')
 #funçao para guiar a tomada de direção
 def opcao_escolhida():
     opcao = int(input('Opcão: '))
@@ -32,31 +36,53 @@ def opcao_escolhida():
     if opcao == 1:
         
         adicionar_livro()
-        adicao_avaliacao = str(input('Deseja adicionar uma avaliação:[S/N]')).strip().upper()
+        adicao_avaliacao = str(input('Deseja adicionar uma avaliação:[S/N]: ')).strip().upper()
+        adicao_comentario = str(input('Deseja adicionar um comentario:[S/N]: ')).strip().upper()
         
         if adicao_avaliacao == 'S' or adicao_avaliacao == 's':
             
             adicionar_avaliacao()
+        else:
+            return '-'
+        
+        if adicao_comentario == 'S' or adicao_comentario =='s':
+            adicionar_comentario()
+        else:
+            return '-'
+        
         voltar_ao_menu()
         
     elif opcao == 2:
         
         Biblioteca.listar_livros()
         adicao_avaliacao = str(input('Deseja adicionar uma avaliação:[S/N]')).strip().upper()
+        adicao_comentario = str(input('Deseja adicionar um comentario:[S/N]: ')).strip().upper()
         
         if adicao_avaliacao == 'S' or adicao_avaliacao == 's':
             
             adicionar_avaliacao()
+            
+        if adicao_comentario == 'S' or adicao_comentario =='s':
+            adicionar_comentario()
+            
         voltar_ao_menu()
         
     elif opcao == 3:
         
+        locar_livro()
+        adicao_comentario = str(input('Deseja adicionar um comentario:[S/N]: ')).strip().upper()
+        if adicao_comentario == 'S' or adicao_comentario =='s':
+            adicionar_comentario()
+            
+        voltar_ao_menu()
+    
+    elif opcao == 4:
+        os.system('cls')
+        Biblioteca.exibir_comentario()
+        voltar_ao_menu()
+    elif opcao == 5:
         finalizar_app()
         
-    elif opcao == 4:
-        
-        locar_livro()
-        voltar_ao_menu()
         
     else:
         
@@ -94,8 +120,10 @@ def locar_livro():
             
     else:
         print('Livro não encontrado, por favor verifique se temos o livro em nossa biblioteca')
-        
+
+     
 def adicionar_avaliacao():
+    
     os.system('cls')
     
     nome_do_livro = input('Digite o nome do livro:').strip().capitalize()
@@ -104,7 +132,7 @@ def adicionar_avaliacao():
     if livro:
         
         try:
-            cliente = input('Digite o nome do cliente: ').strip().capitalize()
+            cliente = input('Digite o seu nome: ').strip().capitalize()
             nota = int(input('Digite uma nota entre 0 e 5: '))
             
             if 0<= nota <=5:
@@ -117,8 +145,22 @@ def adicionar_avaliacao():
                 
         except ValueError:
                 print('Entrada errada, por favor digitar uma entrada valida!!')
-                adicionar_avaliacao()
-
+                adicionar_avaliacao()     
+def adicionar_comentario():
+    os.system('cls')
+    nome_do_livro = input('Digite o nome do livro:').strip().capitalize()
+    livro = Biblioteca.buscar_livro_por_nome(nome_do_livro)
+    
+    if livro:
+        try:
+            nome_cliente = input('Digite o seu nome:').strip().capitalize()
+            comentario = str(input('Comentario: ')).strip().capitalize()
+            
+            livro.adicionar_comentario(nome_cliente,comentario)
+        except ValueError:
+            print('entrada invalida, tente novamente')
+            adicionar_comentario()
+            
 def adicionar_livro():
     
     nome = str(input('Digite o nome do livro: ')).strip()
@@ -141,6 +183,8 @@ def voltar_ao_menu():
     os.system('cls')
     main()
     
+
+comentario1 = Comentarios('Matheus','muito bom')
 #Vilão
 vilao = Biblioteca('Vilão','Fantasia','2013')
 vilao.adicionar_avaliacao('Matheus', 10)
