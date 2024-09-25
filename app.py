@@ -28,7 +28,8 @@ def exibir_opcoes():
           2.LISTAR LIVROS DA BIBLIOTECA
           3.LOCAR LIVRO
           4.EXIBIR COMENTARIOS
-          5.Fechar app''')
+          5.DEVOLUÇAO DE LIVRO
+          6.Fechar app''')
 #funçao para guiar a tomada de direção
 def opcao_escolhida():
     opcao = int(input('Opcão: '))
@@ -43,14 +44,14 @@ def opcao_escolhida():
             
             adicionar_avaliacao()
         else:
-            return '-'
+            voltar_ao_menu()
         
         if adicao_comentario == 'S' or adicao_comentario =='s':
             adicionar_comentario()
+            voltar_ao_menu()
         else:
-            return '-'
+            voltar_ao_menu()
         
-        voltar_ao_menu()
         
     elif opcao == 2:
         
@@ -78,9 +79,12 @@ def opcao_escolhida():
     
     elif opcao == 4:
         os.system('cls')
-        Biblioteca.exibir_comentario()
+        Comentarios.exibir_comentario()
         voltar_ao_menu()
+    
     elif opcao == 5:
+        devolucao()
+    elif opcao == 6:
         finalizar_app()
         
         
@@ -89,6 +93,23 @@ def opcao_escolhida():
         print('Opçao invalida')
         voltar_ao_menu()
 #funçao para a locação de livro (muda o estado de disponibilidade do livro dependendo da escolha)
+def devolucao():
+    os.system('cls')
+    nome_do_livro = input('Digite o nome do livro para devolução: ').strip().capitalize()
+    livro = Biblioteca.buscar_livro_por_nome(nome_do_livro)
+    
+    if livro:
+        if livro._disponivel == False:
+            livro.alternar_estado()
+            print('Devolução realizada com sucesso!!!')
+            voltar_ao_menu()
+        else:
+            print('Esse livro não foi locado, verifique as informações')
+            voltar_ao_menu()
+    else:
+        print('Livro não encontrado nos registro...')
+        voltar_ao_menu()
+    
 def locar_livro():
     os.system('cls')
     
@@ -154,12 +175,14 @@ def adicionar_comentario():
     if livro:
         try:
             nome_cliente = input('Digite o seu nome:').strip().capitalize()
-            comentario = str(input('Comentario: ')).strip().capitalize()
+            comentario = str(input('Comentario: ')).strip()
             
-            livro.adicionar_comentario(nome_cliente,comentario)
+            Comentarios.adicionar_comentario(nome_cliente, comentario)
+            print('Comentário adicionado com sucesso!')
         except ValueError:
-            print('entrada invalida, tente novamente')
+            print('Entrada inválida, tente novamente')
             adicionar_comentario()
+
             
 def adicionar_livro():
     

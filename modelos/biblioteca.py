@@ -1,7 +1,6 @@
 from modelos.avaliacoes import Avaliacao
 from modelos.comentarios import Comentarios
 lista_de_livros = list()
-lista_de_comentarios = list()
 class Biblioteca :
     def __init__(self,nome,categoria,ano): #Bloco construtor, define os parametros de todos os livros
         self._nome = nome.capitalize()
@@ -42,16 +41,6 @@ class Biblioteca :
             avaliacao = Avaliacao(cliente,nota) #A variavel avalicão recebe os atributos da classe Avaliação
             self._avaliacao.append(avaliacao)
     
-    def adicionar_comentario(self,nome_cliente,comentario):
-        comentari0 = Comentarios(nome_cliente,comentario)
-        lista_de_comentarios.append(comentari0)
-        
-    @classmethod
-    def exibir_comentario(cls):
-        for c in lista_de_comentarios:
-            print('-='*30)
-            print(f'[CLIENTE]:{c._nome_cliente}\n[COMENTARIO]:{c._comentario}')
-            print('-='*30)
             
     @property 
     def calculo_de_media(self):#metodo para calcular a media das avaliações
