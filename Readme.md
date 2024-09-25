@@ -1,2 +1,7 @@
-Olá, esse projeto simula o back end de uma biblioteca online
-esse é um dos primeiros projetos que estou subindo, mas logo virão mais.
+Hello World!! Esse projeto simula o back-end de uma biblioteca
+possuindo funcionalidade como;
+-locar livros
+-listar livros disponiveis
+-avaliações 
+-comentarios
+-devoluções

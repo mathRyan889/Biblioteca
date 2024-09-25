@@ -56,7 +56,7 @@ def opcao_escolhida():
     elif opcao == 2:
         
         Biblioteca.listar_livros()
-        adicao_avaliacao = str(input('Deseja adicionar uma avaliação:[S/N]')).strip().upper()
+        adicao_avaliacao = str(input('Deseja adicionar uma avaliação:[S/N]:')).strip().upper()
         adicao_comentario = str(input('Deseja adicionar um comentario:[S/N]: ')).strip().upper()
         
         if adicao_avaliacao == 'S' or adicao_avaliacao == 's':
