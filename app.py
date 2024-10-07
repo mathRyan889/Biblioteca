@@ -2,7 +2,6 @@
 import os
 from time import sleep
 from modelos.biblioteca import Biblioteca
-from modelos.avaliacoes import Avaliacao
 from modelos.comentarios import Comentarios
 
 lista_de_comentarios=list()
@@ -52,7 +51,7 @@ def opcao_escolhida():
         else:
             voltar_ao_menu()
         
-        
+         
     elif opcao == 2:
         
         Biblioteca.listar_livros()

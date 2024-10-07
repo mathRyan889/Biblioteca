@@ -1,6 +1,5 @@
-from modelos.avaliacoes import Avaliacao
-from modelos.comentarios import Comentarios
-lista_de_livros = list()
+from modelos.avaliacoes import Avaliacao # importa a classe Avaliação
+lista_de_livros = list() # lista com os livros adicioanados
 class Biblioteca :
     def __init__(self,nome,categoria,ano): #Bloco construtor, define os parametros de todos os livros
         self._nome = nome.capitalize()
@@ -8,7 +7,7 @@ class Biblioteca :
         self._ano = ano
         self._avaliacao = []
         self._disponivel = False
-        lista_de_livros.append(self)
+        lista_de_livros.append(self) #adiciona livro a lista
         
 
     @property #Transforma o metodo em um atribudo da classe, facilitando sua manipulação
